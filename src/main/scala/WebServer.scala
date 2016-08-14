@@ -1,14 +1,9 @@
 import java.util.UUID
-
-import scala.io.StdIn
 import com.twitter.finagle.Http
 import com.twitter.server.TwitterServer
 import com.twitter.util.Await
 import io.finch._
-import io.circe._
 import io.circe.generic.auto._
-import io.circe.parser._
-import io.circe.syntax._
 import io.finch.circe._
 
 trait Message
