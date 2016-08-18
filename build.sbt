@@ -1,5 +1,5 @@
 name := "Finch1"
-version := "1.0"
+version := "1.1"
 scalaVersion := "2.11.8"
 
 enablePlugins(DockerPlugin)
@@ -16,6 +16,8 @@ scalacOptions ++= Seq(
   "-Ywarn-numeric-widen",
   "-Ywarn-value-discard",
   "-Xfuture")
+
+dockerRepository := Some("10.70.16.194:5000")
 
 val circeVersion = "0.4.1"
 

@@ -11,9 +11,12 @@ final case class Person(name: String, age: Int) extends Message
 final case class Envelope[A <: Message](payload: A, server: String, appId: String)
 
 object Envelope {
-  private val id = UUID.randomUUID()
-  def apply[A <: Message](payload: A): Envelope[A] =
-    Envelope(payload, java.net.InetAddress.getLocalHost.toString, id.toString)
+  private val id = UUID.randomUUID().toString
+  private val host: String = java.net.InetAddress.getLocalHost.toString
+
+  def apply[A <: Message](payload: A): Envelope[A] = {
+    Envelope(payload, host, id)
+  }
 }
 
 object WebServer extends TwitterServer {
