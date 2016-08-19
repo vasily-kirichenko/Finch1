@@ -26,6 +26,10 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="SBT: com.chuusai:shapeless_2.11:2.3.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.javassist:javassist:3.19.0-GA:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.zaxxer:HikariCP-java6:2.3.7:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.typesafe.slick:slick-hikaricp_2.11:3.1.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.typesafe.slick:slick-extensions_2.11:3.1.0:jar" level="project" />
     <orderEntry type="library" name="SBT: org.typelevel:macro-compat_2.11:1.1.1:jar" level="project" />
     <orderEntry type="library" name="SBT: org.typelevel:machinist_2.11:0.4.1:jar" level="project" />
     <orderEntry type="library" name="SBT: org.typelevel:cats-macros_2.11:0.6.0:jar" level="project" />
@@ -78,6 +82,20 @@
     <orderEntry type="library" name="SBT: com.twitter:util-stats_2.11:6.35.0:jar" level="project" />
     <orderEntry type="library" name="SBT: org.apache.thrift:libthrift:0.5.0-1:jar" level="project" />
     <orderEntry type="library" name="SBT: org.scala-lang.modules:scala-xml_2.11:1.0.5:jar" level="project" />
-    <orderEntry type="library" name="SBT: org.slf4j:slf4j-api:1.5.8:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.typesafe:config:1.2.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: com.typesafe.slick:slick_2.11:3.1.1:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.reactivestreams:reactive-streams:1.0.0:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.slf4j:slf4j-nop:1.6.4:jar" level="project" />
+    <orderEntry type="module-library">
+      <library name="SBT: unmanaged-jars">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../lib/sqljdbc42.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="SBT: com.zaxxer:HikariCP:2.4.7:jar" level="project" />
+    <orderEntry type="library" name="SBT: org.slf4j:slf4j-api:1.7.21:jar" level="project" />
   </component>
 </module>

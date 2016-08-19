@@ -1,5 +1,5 @@
 name := "Finch1"
-version := "1.1"
+version := "1.6"
 scalaVersion := "2.11.8"
 
 enablePlugins(DockerPlugin)
@@ -18,6 +18,7 @@ scalacOptions ++= Seq(
   "-Xfuture")
 
 dockerRepository := Some("10.70.16.194:5000")
+dockerBaseImage := "anapsix/alpine-java"
 
 val circeVersion = "0.4.1"
 
@@ -34,3 +35,16 @@ libraryDependencies ++= Seq(
 
 resolvers += "twttr" at "https://maven.twttr.com/"
 libraryDependencies += "com.twitter" %% "twitter-server" % "1.21.0"
+
+libraryDependencies ++= Seq(
+  "com.typesafe.slick" %% "slick" % "3.1.1",
+  "org.slf4j" % "slf4j-nop" % "1.6.4"
+)
+
+resolvers += "Typesafe Releases" at "http://repo.typesafe.com/typesafe/maven-releases/"
+
+libraryDependencies ++= Seq(
+  "com.typesafe.slick" %% "slick-extensions" % "3.1.0",
+  "com.typesafe.slick" %% "slick-hikaricp" % "3.1.0",
+  "com.zaxxer" % "HikariCP" % "2.4.7")
+
