@@ -10,6 +10,7 @@ import io.circe.generic.auto._
 import io.finch.circe._
 import com.typesafe.slick.driver.ms.SQLServerDriver.api._
 import Utils.Implicits._
+import slick.backend.StaticDatabaseConfig
 
 trait Message
 final case class Person(name: String, age: Int) extends Message
@@ -24,7 +25,7 @@ object Envelope {
   }
 }
 
-final case class FormatType
+case class FormatType
   (id: Short,
    name: String,
    isCategorized: Boolean,
@@ -33,60 +34,26 @@ final case class FormatType
    isObsolete: Boolean,
    idElf: Short)
 
-object Mapping {
-//  class FormatTypes(tag: Tag)
-//    extends Table[(Short, String, Boolean, Boolean, Boolean, Boolean, Short)](tag, "dbo.FormatType") {
-//    def id = column[Short]("IDFormatType", O.PrimaryKey)
-//    def name = column[String]("Name")
-//    def isCategorized = column[Boolean]("IsCategorized")
-//    def isSafe = column[Boolean]("IsSafe")
-//    def isUnknown = column[Boolean]("IsUnknown")
-//    def isObsolete = column[Boolean]("IsObsolete")
-//    def idElf = column[Short]("IDElf")
-//    def * = (id, name, isCategorized, isSafe, isUnknown, isObsolete, idElf)
-//  }
-//
-//  val formatTypes = TableQuery[FormatTypes]
-  import slick.jdbc.GetResult
-  implicit val getFormatTypeResult = GetResult(r => FormatType(r.<<, r.<<, r.<<, r.<<, r.<<, r.<<, r.<<))
+object FormatTypeOps {
+  type Tuple = (Short, String, Boolean, Boolean, Boolean, Boolean, Short)
 }
 
+@StaticDatabaseConfig("file:src/main/resources/application.conf#tsql")
 object WebServer extends TwitterServer {
   def main() = {
-//    val service: Service[Request, Response] = new Service[Request, Response] {
-//      def apply(req: Request): Future[Response] = {
-//        val resp = Response()
-//        resp.contentString = "Hello"
-//        //resp.contentLength = 5
-//        resp.setContentType("text/plain")
-//        Future.value(resp)
-//      }
-//    }
-//val server = Http.server.serve(":29002", service)
-//Await.ready(server)
-
     val person: Endpoint[Envelope[Person]] = get("person" :: string) { name: String => Ok(Envelope(Person(name, 41))) }
 
     implicit val ctx = concurrent.ExecutionContext.Implicits.global
-    import Mapping._
     val db = Database.forConfig("wl")
 
     val formatType: Endpoint[FormatType] = get("formatType" :: int) { id: Int =>
-      val cmd =
-        sql"""
-             select
-               IDFormatType,
-               Name,
-               IsCategorized,
-               IsSafe,
-               IsUnknown,
-               IsObsolete,
-               IDElf
-             from dbo.FormatType
-             where IDFormatType = $id""".as[FormatType].headOption
+      val cmd: DBIO[Option[FormatTypeOps.Tuple]] =
+        tsql"""select cast(IDFormatType as smallint), Name, IsCategorized, IsSafe, IsUnknown, IsObsolete, IDElf
+               from dbo.FormatType
+               where IDFormatType = $id""".headOption
 
       db.run(cmd).map {
-          case Some(x) => Ok(x)
+          case Some(x) => Ok(FormatType.tupled(x))
           case None => NotFound(new Exception(s"FormatType was not found for id = $id"))
       }.asTwitter
 
